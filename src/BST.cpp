@@ -3,8 +3,6 @@
 
 using namespace std;
 
-Node::Node(int valor) : chave(valor) , esquerda(nullptr), direita(nullptr) {}
-
 BST::BST() : raiz(nullptr) {}
 
 BST::~BST() {
