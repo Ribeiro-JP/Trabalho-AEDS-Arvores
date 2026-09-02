@@ -3,10 +3,10 @@
 struct Node
 {
     int chave;
-    int peso;
+    int altura;
     Node* esquerda;
     Node* direita;
-    Node(int valor): chave(valor), peso(0), esquerda(nullptr), direita(nullptr) {};
+    Node(int valor): chave(valor), altura(0), esquerda(nullptr), direita(nullptr) {};
 };
 
 class AVL
@@ -17,9 +17,10 @@ private:
     Node* inserirR(Node* no, int chave);
     Node* buscarR(Node* no, int chave);
     Node* removerR(Node* no, int chave);
-    Node* verificarPesosR(Node* no);
+    int obterAltura(Node* no);
     void exibirOrdemR(Node* no);
     void destruirR(Node* no);
+    Node* encontrarMinimoR(Node* no);
 
     Node* rotacionarEsqR(Node* no);
     Node* rotacionarDirR(Node* no);
@@ -37,7 +38,6 @@ public:
     void inserir(int chave);
     Node* buscar(int chave);
     void remover(int chave);
-    void verificarPesos();
     void exibirOrdem();
 };
 
