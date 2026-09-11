@@ -166,7 +166,7 @@ Node* AVL::removerR(Node* no, int chave){
         return (fbDireita >= 0) ? rotacionarEsqR(no) : rotacionarDirEsqR(no);
     }
     if(fator_balanceamento < -1){
-        int fbEsquerda = obterAltura(no->esquerda->esquerda) - obterAltura(no->esquerda->direita);
+        int fbEsquerda = obterAltura(no->esquerda->direita) - obterAltura(no->esquerda->esquerda);
         return (fbEsquerda <= 0) ? rotacionarDirR(no) : rotacionarEsqDirR(no);
     }
 
