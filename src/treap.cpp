@@ -6,7 +6,7 @@
 
 using namespace std;
 
-TREAP::TREAP() : raiz(nullptr) {}
+TREAP::TREAP() : raiz(nullptr), gerador(std::random_device{}()), distribuicao(0, 1000000) {}
 
 TREAP::~TREAP() {
     destruirR(raiz);
@@ -101,11 +101,7 @@ void TREAP::exibirOrdem() {
 }
 
 int TREAP::gerarPrioridade() {
-    std::random_device rd; 
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> dist(0, 1000000); // Intervalo de prioridades
-    
-    return dist(gen);
+    return distribuicao(gerador);
 }
 
 Node* TREAP::inserirR(Node* no, int chave, int prioridade_gerada) {

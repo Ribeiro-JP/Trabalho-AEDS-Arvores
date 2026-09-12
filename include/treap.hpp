@@ -1,5 +1,7 @@
 #pragma once
 
+#include <random>
+
 struct Node
 {
     int chave;
@@ -13,6 +15,8 @@ class TREAP
 {
 private:
     Node* raiz;
+    std::mt19937 gerador;
+    std::uniform_int_distribution<int> distribuicao;
 
     int gerarPrioridade();
     Node* inserirR(Node* no, int chave, int prioridade);
