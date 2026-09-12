@@ -12,7 +12,7 @@ TEST_BINS := $(addprefix $(BIN_DIR)/test_, $(STRUCTS))
 # estrutura no MESMO arquivo .cpp causa erro de redefinição.
 EXP_BINS := $(addprefix $(BIN_DIR)/exp_, $(STRUCTS))
 
-.PHONY: all test clean datasets experimentos $(addprefix test-, $(STRUCTS))
+.PHONY: all test clean datasets experimentos graficos $(addprefix test-, $(STRUCTS))
 
 all: $(TEST_BINS)
 
@@ -57,3 +57,14 @@ experimentos: datasets $(EXP_BINS)
 	done
 	@echo ""
 	@echo "Concluido! Resultados em experimentos/resultados.csv"
+
+# Gera os gráficos a partir de experimentos/resultados.csv (precisa existir
+# antes -- rode "make experimentos" primeiro se ainda não tiver o CSV).
+# Roda de dentro de experimentos/ porque é lá que o script espera encontrar
+# tanto o resultados.csv quanto a pasta graficos/ de saída.
+graficos:
+	@if [ ! -f experimentos/resultados.csv ]; then \
+		echo "experimentos/resultados.csv nao existe ainda -- rode 'make experimentos' primeiro."; \
+		exit 1; \
+	fi
+	cd experimentos && python3 gerar_graficos.py
