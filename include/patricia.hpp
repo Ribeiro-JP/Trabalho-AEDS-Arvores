@@ -36,4 +36,5 @@ public:
     bool buscar(const std::string& chave);
     void remover(const std::string& chave);
     void exibir();
+    Node* obterRaiz() const { return raiz; }
 };

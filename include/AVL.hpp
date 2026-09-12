@@ -39,5 +39,6 @@ public:
     Node* buscar(int chave);
     void remover(int chave);
     void exibirOrdem();
+    Node* obterRaiz() const { return raiz; }
 };
 

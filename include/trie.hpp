@@ -36,5 +36,6 @@ public:
     void remover(const std::string& chave);
     void exibir();
     bool contemPrefixo(const std::string& chave);
+    Node* obterRaiz() const { return raiz; }
 };
 

@@ -31,4 +31,5 @@ public:
     Node* buscar(int x, int y);
     void remover(int x, int y);
     void exibir();
+    Node* obterRaiz() const { return raiz; }
 };
