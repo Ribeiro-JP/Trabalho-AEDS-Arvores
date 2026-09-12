@@ -68,6 +68,14 @@ def gerar_datasets_int():
         escrever_inteiros(os.path.join(pasta, f"sorted_asc_{n}.txt"), ordenado)
         escrever_inteiros(os.path.join(pasta, f"sorted_desc_{n}.txt"), list(reversed(ordenado)))
 
+        # ordem de remoção DESACOPLADA da ordem de inserção -- sem isso, medir
+        # remoção na mesma ordem de uma entrada já ordenada favorece
+        # artificialmente estruturas degeneradas (cada remoção acerta sempre
+        # a raiz/extremo atual, que é O(1) ali, mascarando o custo real)
+        ordem_remocao = valores.copy()
+        random.shuffle(ordem_remocao)
+        escrever_inteiros(os.path.join(pasta, f"remocao_{n}.txt"), ordem_remocao)
+
 
 # ---------------------------------------------------------------------------
 # strings (Trie, Patricia)
