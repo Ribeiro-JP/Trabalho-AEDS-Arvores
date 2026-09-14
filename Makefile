@@ -11,8 +11,9 @@ TEST_BINS := $(addprefix $(BIN_DIR)/test_, $(STRUCTS))
 # própria "struct Node" no escopo global; incluir mais de um header de
 # estrutura no MESMO arquivo .cpp causa erro de redefinição.
 EXP_BINS := $(addprefix $(BIN_DIR)/exp_, $(STRUCTS))
+VIS_BINS := $(addprefix $(BIN_DIR)/vis_, $(STRUCTS))
 
-.PHONY: all test clean datasets experimentos graficos $(addprefix test-, $(STRUCTS))
+.PHONY: all test clean datasets experimentos graficos visualizacao $(addprefix test-, $(STRUCTS))
 
 all: $(TEST_BINS)
 
@@ -68,3 +69,20 @@ graficos:
 		exit 1; \
 	fi
 	cd experimentos && python3 gerar_graficos.py
+
+# Compila cada demo de visualização: visualizacao/vis_<nome>.cpp + src/<nome>.cpp
+$(BIN_DIR)/vis_%: visualizacao/vis_%.cpp src/%.cpp | $(BIN_DIR)
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+# Roda os 7 demos (gera os .dot em visualizacao/dot/dot_<estrutura>/) e
+# renderiza cada .dot em .png dentro de visualizacao/rendered/
+visualizacao: $(VIS_BINS)
+	@mkdir -p $(addprefix visualizacao/dot/dot_, $(STRUCTS))
+	@for bin in $(VIS_BINS); do ./$$bin; done
+	@mkdir -p visualizacao/rendered
+	@for f in $$(find visualizacao/dot -name "*.dot"); do \
+		nome=$$(basename "$$f" .dot); \
+		estrutura=$$(basename $$(dirname "$$f") | sed 's/dot_//'); \
+		dot -Tpng "$$f" -o "visualizacao/rendered/$${estrutura}_$${nome}.png"; \
+	done
+	@echo "Concluido! Imagens em visualizacao/rendered/"
